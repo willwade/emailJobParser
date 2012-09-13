@@ -22,7 +22,7 @@ def downloadAvailableEMails():
     emails = [email for email in EMailDownloader.getEmails(since=startDate)]
     if len(emails) == 0: return 0
     
-    cPickle.dump(emails, open("MailArchive%s.pkl"%(datetime.datetime.now()), 'wb'))
+    cPickle.dump(emails, open(N.MAILARCHIVES +  "MailArchive%s.pkl"%(datetime.datetime.now()), 'wb'))
     
     jobs = []
     for email in emails:

@@ -89,13 +89,13 @@ class EMail:
 if __name__ == '__main__':
     emails = []
     
-    if not os.path.exists("MailArchive2012-06-08 17-49-05.296393.pkl"):
+    if not os.path.exists(N.MAILARCHIVES + "MailArchive2012-06-08 17-49-05.296393.pkl"):
         for email in EMailDownloader.getEmails(since=datetime.datetime(2012,6,7,23,24,34)):
             emails.append(email)
         print len(emails)
-        cPickle.dump(emails, open("MailArchive2012-06-08 17-49-05.296393.pkl"))
+        cPickle.dump(emails, open(N.MAILARCHIVES + "MailArchive2012-06-08 17-49-05.296393.pkl"))
 
-    emails = cPickle.load(open("MailArchive2012-06-08 17-49-05.296393.pkl","rb"))
+    emails = cPickle.load(open(N.MAILARCHIVES + "MailArchive2012-06-08 17-49-05.296393.pkl","rb"))
     jobs = []
     for email in emails:
         jobsToAdd = email.parse()

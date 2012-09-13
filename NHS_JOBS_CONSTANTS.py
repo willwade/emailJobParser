@@ -1,8 +1,9 @@
-
 SENDER = 'nhs-vac@nhscareersjobs.co.uk'
 FOLDER = 'OT:Jobs'
 ACCOUNT_NAME = 'email@gmail.com'
 ACCOUNT_PASSWD = 'PASSWORD'
+MAILARCHIVES = '/srv/_bin/emailJobParser/MailArchives/'
+TEMPIMAGE = '/srv/_bin/emailJobParser/'
 
 SMTP_SERVER = 'smtp.gmail.com'
 SQL_HOST_NAME = 'localhost'
