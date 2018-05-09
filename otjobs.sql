@@ -28,7 +28,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 CREATE TABLE IF NOT EXISTS `band5Summary` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `pDate` datetime default NULL,
-  `tstamp` int(11) default NULL,
+  `tstamp` int unsigned default NULL,
   `number` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1449 ;
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `band5Summary` (
 --
 
 CREATE TABLE IF NOT EXISTS `otjobs` (
-  `tstamp` int(11) NOT NULL default '0',
+  `tstamp` int unsigned NOT NULL default '0',
   `pDate` datetime default NULL,
   `uname` text character set latin1 NOT NULL,
   `title` text character set latin1 NOT NULL,
@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `otjobs` (
   `source` varchar(11) collate utf8_unicode_ci default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE UNIQUE INDEX `otjobs_uurlid_idx` ON `otjobs` (`uniqurlid`);
 -- --------------------------------------------------------
 
 --
@@ -71,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `otjobs` (
 --
 
 CREATE TABLE IF NOT EXISTS `otjobssummary` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `tstamp` int(11) default NULL,
+  `id` int unsigned NOT NULL auto_increment,
+  `tstamp` int unsigned default NULL,
   `number` int(11) default NULL,
   `numberTemp` int(11) default NULL,
   `numberPerm` int(11) default NULL,

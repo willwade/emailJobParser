@@ -8,7 +8,11 @@ import datetime
 import dateutil.parser
 import NHS_JOBS_CONSTANTS as N
 
-def getEmails(since=None, accountName=N.ACCOUNT_NAME, accountPasswd=N.ACCOUNT_PASSWD, emailFolder=N.FOLDER, sender=N.SENDER):
+def getEmails(since=None, accountName=None, accountPasswd=None, emailFolder=N.FOLDER, sender=N.SENDER):
+    if accountName is None:
+        accountName = N.ACCOUNT_NAME
+    if accountPasswd is None:
+        accountPasswd = N.ACCOUNT_PASSWD
     g = pygmail.pygmail()
     g.login(accountName, accountPasswd)
     ids = g.get_mails_from(sender,emailFolder, since=since)
