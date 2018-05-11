@@ -1,0 +1,4 @@
+schedule
+mysqlclient
+python-dateutil
+pygooglechart

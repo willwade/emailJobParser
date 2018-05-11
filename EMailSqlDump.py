@@ -2,13 +2,14 @@ import MySQLdb
 import datetime, time
 import NHS_JOBS_CONSTANTS as N
 
-def getPostedJobsAndCounts(cursor, tableName):
-    sqlCMD = "SELECT uniqurlid, repostedcnt from %s" %(tableName)
+def getPostedJobsAndCounts(cursor, tableName, jobs):
+    sqlCMD = "SELECT uniqurlid, repostedcnt from %s WHERE uniqurlid in (%s)" \
+            %(tableName, ",".join(map(lambda j:str(int(j.uniqueURLID)), jobs)))
     cursor.execute(sqlCMD)
     results = cursor.fetchall()
     toReturn = {}
     for uniqueURL, count in results:
-        toReturn[uniqueURL] = count
+        toReturn[str(uniqueURL)] = count
     return toReturn
     
 def updateRepostedCount(cursor, tableName, url, count):
@@ -17,6 +18,17 @@ def updateRepostedCount(cursor, tableName, url, count):
     cursor.execute(sqlCMD)
     cursor.execute('COMMIT')
     
+''' REMOVE LATER
+
+def getPostedJobsAndCounts(cursor, tableName):
+    sqlCMD = "SELECT uniqurlid, repostedcnt from %s " %(tableName)
+    cursor.execute(sqlCMD)
+    results = cursor.fetchall()
+    toReturn = {}
+    for uniqueURL, count in results:
+        toReturn[uniqueURL] = count
+    return toReturn
+
 def dumpJobOffersToSQL(jobOffers, timestamp=time.time()):
     connection = MySQLdb.connect(N.SQL_HOST_NAME, N.SQL_USER_NAME, N.SQL_PASSWD, N.SQL_DB)
     cursor = connection.cursor()
@@ -32,6 +44,7 @@ def dumpJobOffersToSQL(jobOffers, timestamp=time.time()):
     
     dumpJobOfferSummary(jobOffers, timestamp, tableName = N.JOBS_SUMMARY_TABLENAME, cursor=cursor)
     dumpBand5OfferSummary(jobOffers, timestamp, tableName = N.JOBS_BAND5_SUMMARY_TABLENAME, cursor=cursor)
+'''
 
 def dumpJobOffer(o, tableName, cursor, timestamp):
     sqlCMD = 'INSERT INTO %s (tstamp, pDate, uname, title, band, location, salary, salary_lower, salary_higher, pro_rata, stDate, duration, descr, lat, lon, city, status, url, repostedcnt, uniqurlid, fixedband, source) VALUES\

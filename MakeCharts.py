@@ -5,6 +5,7 @@ import NHS_JOBS_CONSTANTS as N
 import datetime
 from pygooglechart import SimpleLineChart
 from pygooglechart import Axis
+from tempfile import mkstemp
 
 def createSummaryCharts():
     connection = MySQLdb.connect(host=N.SQL_HOST_NAME, user=N.SQL_USER_NAME, passwd=N.SQL_PASSWD, db=N.SQL_DB)
@@ -18,7 +19,6 @@ def getRollingAverageGraph(cursor, colName, rollingWindowDays, title=""):
     sqlCMD = "SELECT pDate, %s from %s" %(colName, N.JOBS_SUMMARY_TABLENAME)
     cursor.execute(sqlCMD)
     results = cursor.fetchall()
-    
     beginWindowIndex = 0
     endWindowIndex = 0
     xData = []
@@ -39,10 +39,8 @@ def getRollingAverageGraph(cursor, colName, rollingWindowDays, title=""):
     chart.set_axis_labels(Axis.LEFT, yLabels)
     chart.set_axis_labels(Axis.BOTTOM, xLabels)
     chart.set_title("Rolling %i-Day Average %s" % (rollingWindowDays, title))
-    chart.download(N.TEMPIMAGE + 'temp.png')
-    f = open(N.TEMPIMAGE + 'temp.png','r')
-    toReturn = cStringIO.StringIO(f.read())
-    f.close()
+    imgbin = chart.download()
+    toReturn = cStringIO.StringIO(imgbin)
     toReturn.seek(0)
     return chart.get_url(), toReturn
     
